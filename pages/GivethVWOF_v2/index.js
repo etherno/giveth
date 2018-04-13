@@ -3,7 +3,7 @@ import firebase from "firebase";
 // import { isMobile } from "../lib/platformChecker";
 
 // components
-import MainMenu from "../components/MainMenu";
+import MainMenu from "../../components/MainMenu";
 
 // // views
 // import VideoWallOfFame from "./../components/views/VideoWallOfFame.js";

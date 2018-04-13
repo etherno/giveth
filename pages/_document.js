@@ -13,14 +13,15 @@ export default class MyDocument extends Document {
       <html>
         <html lang="en" />
         <Head>
-          <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="description" content="Charitable giving on the blockchain - revolution.eth" />
-          <title>Giveth</title>
+          <title>Giveth Video Wall of Fame</title>
+          <link rel="shortcut icon" href="/static/favicon.ico" />
           <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" />
           {this.props.styleTags}
         </Head>
         <body>
+          <noscript>You need to enable JavaScript to run this app.</noscript>
           <Main />
           <NextScript />
         </body>

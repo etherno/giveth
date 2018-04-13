@@ -32,6 +32,9 @@ i18nInstance
         // enable middleware for i18next
         server.use(i18nextMiddleware.handle(i18nInstance))
 
+        // serve general static files
+        server.use('/static', express.static(path.join(__dirname, '/static')))
+
         // serve locales for client
         server.use('/locales', express.static(path.join(__dirname, '/locales')))
 
