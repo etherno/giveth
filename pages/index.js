@@ -24,6 +24,52 @@ var config = {
 !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
 
 export default () => (
-  <MainMenu />
+  <div>
+    <MainMenu />
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+    <div>asdasdasd</div>
+  </div>
 );
 

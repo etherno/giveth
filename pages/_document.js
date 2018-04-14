@@ -18,6 +18,7 @@ export default class MyDocument extends Document {
           <title>Giveth Video Wall of Fame</title>
           <link rel="shortcut icon" href="/static/favicon.ico" />
           <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" />
+          <link href="https://fonts.googleapis.com/css?family=Quicksand:200,300,400,700" rel="stylesheet" />
           {this.props.styleTags}
         </Head>
         <body>
