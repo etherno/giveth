@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 
 import { BurgerIcon, CrossIcon } from './Icons';
+// import Button from './Button';
 
 const MenuContainer = styled.div`
   display: flex;
@@ -21,6 +22,7 @@ const BurgerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `
 
 const Nav = styled.nav`
@@ -36,6 +38,30 @@ const NavItem = styled.a`
   background-color: #2c0d54;
   border-top: 1px solid white;
   font-family: Quicksand;
+  text-decoration: none;
+`
+
+const Test = styled.div`
+  padding: 1rem;
+  display: block;
+  color: white;
+  background-color: #2c0d54;
+  border-top: 1px solid white;
+  font-family: Quicksand;
+  text-decoration: none;
+`
+
+const Button = styled.a`
+  padding: .5rem 1rem;
+  border: 2px solid white;
+  background-color: transparent;
+  color: white;
+  border-radius: .25rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
 `
 
 class MainMenu extends Component {
@@ -59,11 +85,15 @@ class MainMenu extends Component {
           </BurgerContainer>
         </MenuContainer>
         {showMenu && <Nav>
-          <NavItem>Platform</NavItem>
-          <NavItem>Community</NavItem>
-          <NavItem>Developers</NavItem>
-          <NavItem>Unicorns</NavItem>
-          <NavItem>Wiki</NavItem>
+          <NavItem href="https://giveth.io/#communities">Platform</NavItem>
+          <NavItem href="https://giveth.io/#dac">Community</NavItem>
+          <NavItem href="https://giveth.io/#developers-corner">Developers</NavItem>
+          <NavItem href="https://giveth.io/#unicorn-dac">Unicorns</NavItem>
+          <NavItem href="https://wiki.giveth.io">Wiki</NavItem>
+          <NavItem>
+            <Button href="https://giveth.io/join/">Join</Button>
+            <Button href="https://giveth.io/donate/">Donate</Button>
+          </NavItem>
         </Nav>}
       </div>
     );
