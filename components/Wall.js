@@ -13,7 +13,7 @@ import styled from 'styled-components';
 // import logo from "../../img/wall-of-fame-logo-new.svg";
 
 const Video = styled.video`
-  bottom: -5px;
+  margin-bottom: -5px;
 `
 
 class VideoWallOfFame extends Component {
