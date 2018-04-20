@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { BurgerIcon, CrossIcon } from './Icons';
 // import Button from './Button';
+import { translate } from 'react-i18next'
 
 const MenuContainer = styled.div`
   display: flex;
@@ -69,9 +70,15 @@ class MainMenu extends Component {
     showMenu: false
   }
 
+  componentWillMount() {
+    const { i18n } = this.props
+    i18n.changeLanguage('de')
+  }
+
   render() {
-    console.log(this.state)
+    const { t } = this.props
     const { showMenu } = this.state
+
     return (
       <div>
         <MenuContainer>
@@ -85,14 +92,14 @@ class MainMenu extends Component {
           </BurgerContainer>
         </MenuContainer>
         {showMenu && <Nav>
-          <NavItem href="https://giveth.io/#communities">Platform</NavItem>
-          <NavItem href="https://giveth.io/#dac">Community</NavItem>
-          <NavItem href="https://giveth.io/#developers-corner">Developers</NavItem>
-          <NavItem href="https://giveth.io/#unicorn-dac">Unicorns</NavItem>
-          <NavItem href="https://wiki.giveth.io">Wiki</NavItem>
+          <NavItem href="https://giveth.io/#communities">{t('link1')}</NavItem>
+          <NavItem href="https://giveth.io/#dac">{t('link2')}</NavItem>
+          <NavItem href="https://giveth.io/#developers-corner">{t('link3')}</NavItem>
+          <NavItem href="https://giveth.io/#unicorn-dac">{t('link4')}</NavItem>
+          <NavItem href="https://wiki.giveth.io">{t('link5')}</NavItem>
           <NavItem>
-            <Button href="https://giveth.io/join/">Join</Button>
-            <Button href="https://giveth.io/donate/">Donate</Button>
+            <Button href="https://giveth.io/join/">{t('link6')}</Button>
+            <Button href="https://giveth.io/donate/">{t('link7')}</Button>
           </NavItem>
         </Nav>}
       </div>
@@ -100,4 +107,4 @@ class MainMenu extends Component {
   }
 }
 
-export default MainMenu;
+export default translate('navigation')(MainMenu)

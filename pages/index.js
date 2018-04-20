@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import MainMenu from "../components/MainMenu";
 import Wall from "../components/Wall";
 
+import { withI18next } from '../lib/withI18next'
+
 // // views
 // import VideoWallOfFame from "./../components/views/VideoWallOfFame.js";
 // import CampaignsVideosViewer from "./../components/views/CampaignsVideosViewer.js";
@@ -29,7 +31,7 @@ const Header = styled.div`
   padding: 2rem;
 `
 
-export default () => (
+export default withI18next(['common', 'navigation'])(({ t, initialI18nStore }) => (
   <div>
     <MainMenu />
     <Header>
@@ -37,8 +39,5 @@ export default () => (
     </Header>
     <Wall />
   </div>
-);
-
-
-
+))
 
