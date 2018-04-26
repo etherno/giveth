@@ -16,6 +16,11 @@ const Video = styled.video`
   margin-bottom: -5px;
 `
 
+const Card = styled.div`
+  padding: .5rem;
+  box-shadow: 1px 1px 10px 0 rgba(0,0,0,.25);
+`
+
 class VideoWallOfFame extends Component {
   constructor(props) {
     super(props)
@@ -145,13 +150,17 @@ class VideoWallOfFame extends Component {
         columnsCountBreakPoints={{
           350: 1,
           750: 2,
-          900: 3,
+          900: 2,
           1024: 3,
           1470: 3,
         }}
       >
-        <Masonry>
-          {media.length && media[1].map(({ src }) => <div style={{bottom: '-5px'}} ><Video width="100%" src={src} /></div>)}
+        <Masonry gutter=".5rem">
+          {media.length && media[1].map(({ src }) => <div style={{bottom: '-5px'}} >
+            <Card>
+              <Video width="100%" src={src} />
+            </Card>
+          </div>)}
         </Masonry>
       </ResponsiveMasonry>
     )
