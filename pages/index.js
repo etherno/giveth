@@ -29,6 +29,8 @@ var config = {
 
 const Header = styled.div`
   padding: 2rem;
+  margin: 0 auto;
+  max-width: 48rem;
 `
 
 export default withI18next(['common', 'navigation'])(({ t, initialI18nStore }) => (
