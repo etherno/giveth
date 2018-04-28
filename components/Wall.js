@@ -12,14 +12,7 @@ import styled from 'styled-components';
 // import VideoWallOfFameHeader from "../VideoWallOfFameHeader";
 // import logo from "../../img/wall-of-fame-logo-new.svg";
 
-const Video = styled.video`
-  margin-bottom: -5px;
-`
-
-const Card = styled.div`
-  padding: .5rem;
-  box-shadow: 1px 1px 10px 0 rgba(0,0,0,.25);
-`
+import Card from './Card';
 
 class VideoWallOfFame extends Component {
   constructor(props) {
@@ -156,10 +149,8 @@ class VideoWallOfFame extends Component {
         }}
       >
         <Masonry gutter=".5rem">
-          {media.length && media[1].map(({ src }) => <div style={{bottom: '-5px'}} >
-            <Card>
-              <Video width="100%" src={src} />
-            </Card>
+          {media.length && media[1].map((props) => <div style={{bottom: '-5px'}} >
+            <Card {...props}  />
           </div>)}
         </Masonry>
       </ResponsiveMasonry>
