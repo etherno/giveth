@@ -12,6 +12,7 @@
     "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
+    "dayjs": "^1.5.16",
     "express": "^4.16.3",
     "firebase": "^4.12.1",
     "i18next": "^11.1.1",
