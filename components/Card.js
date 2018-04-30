@@ -8,6 +8,7 @@ const Container = styled.div`
 
 const Video = styled.video`
   margin-bottom: -5px;
+  width: 100%;
 `
 
 const Content = styled.div`
@@ -57,14 +58,14 @@ class Card extends Component {
     const date = dayjs(timestamp).format('HH:mm DD-MM-YYYY');
     return (
       <Container>
-        <Video width="100%" src={src} />
+        <Video src={src} />
         <Content>
-          <Title>{title}</Title>
-          <Date>{date}</Date>
-          <Description>{description}</Description>
-          <Items>WALL: {wall.split('_').join(' ')}</Items>
-          <Items>SOCIAL: {social}</Items>
-          <Items>WALLET: {wallet}</Items>
+          <Title>{title || 'No title'}</Title>
+          <Date><span className="fa fa-clock-o" aria-hidden="true" /> {date}</Date>
+          <Description>{description || 'No description'}</Description>
+          {wall && <Items><span className="fa fa-th-large" aria-hidden="true" /> WALL: {wall.split('_').join(' ')}</Items>}
+          {social && <Items><span className="fa fa-user" aria-hidden="true" /> SOCIAL: {social}</Items>}
+          {wallet && <Items><span className="fa fa-address-card" aria-hidden="true" /> WALLET: {wallet}</Items>}
         </Content>
       </Container>
     )
