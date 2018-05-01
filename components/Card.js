@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
+import {Flex, Box} from 'grid-styled';
+import Button from './Button';
+
 const Container = styled.div`
   box-shadow: 1px 1px 10px 0 rgba(0,0,0,.25);
 `
@@ -47,6 +50,16 @@ const Items = styled.p`
   color: #2c0d53;
 `
 
+const ButtonsContainer = styled.div`
+  margin: 0;
+  margin-top: 1rem;
+`
+
+const Link = styled.a`
+  color:inherit;
+  text-decoration: none;
+`
+
 class Card extends Component {
   constructor(props) {
     super(props)
@@ -66,6 +79,24 @@ class Card extends Component {
           {wall && <Items><span className="fa fa-th-large" aria-hidden="true" /> WALL: {wall.split('_').join(' ')}</Items>}
           {social && <Items><span className="fa fa-user" aria-hidden="true" /> SOCIAL: {social}</Items>}
           {wallet && <Items><span className="fa fa-address-card" aria-hidden="true" /> WALLET: {wallet}</Items>}
+          <Box mt={3}>
+            <Button color="#2c0d54" bgColor="white">
+              WATCH <span className="fa fa-video-camera" aria-hidden="true" />
+            </Button>
+            <Flex mt={2}>
+              <Box width="100%" mr={2}>
+                <Button color="#2c0d54" bgColor="white">
+                  <Link href={src}>FIREBASE </Link>
+                  <span className="fa fa-database" aria-hidden="true" />
+                </Button>
+              </Box>
+              <Box width="100%" ml={2}>
+                <Button color="#2c0d54" bgColor="white">
+                  SHARE <span className="fa fa-share" aria-hidden="true" />
+                </Button>
+              </Box>
+            </Flex>
+          </Box>
         </Content>
       </Container>
     )
