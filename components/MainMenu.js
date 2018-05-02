@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-
-import { BurgerIcon, CrossIcon } from './Icons';
-// import Button from './Button';
 import { translate } from 'react-i18next'
+
+import { Flex } from 'grid-styled';
+import { BurgerIcon, CrossIcon } from './Icons';
+import { ButtonLink } from './Button';
 
 const MenuContainer = styled.div`
   display: flex;
@@ -40,9 +41,10 @@ const NavItem = styled.a`
   border-top: 1px solid white;
   font-family: Quicksand;
   text-decoration: none;
+  display: flex;
 `
 
-const Test = styled.div`
+const ButtonsContainer = styled.div`
   padding: 1rem;
   display: block;
   color: white;
@@ -50,19 +52,7 @@ const Test = styled.div`
   border-top: 1px solid white;
   font-family: Quicksand;
   text-decoration: none;
-`
-
-const Button = styled.a`
-  padding: .5rem 1rem;
-  border: 2px solid white;
-  background-color: transparent;
-  color: white;
-  border-radius: .25rem;
-  margin-right: 1rem;
-  cursor: pointer;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  text-decoration: none;
+  display: flex;
 `
 
 class MainMenu extends Component {
@@ -97,10 +87,10 @@ class MainMenu extends Component {
           <NavItem href="https://giveth.io/#developers-corner">{t('link3')}</NavItem>
           <NavItem href="https://giveth.io/#unicorn-dac">{t('link4')}</NavItem>
           <NavItem href="https://wiki.giveth.io">{t('link5')}</NavItem>
-          <NavItem>
-            <Button href="https://giveth.io/join/">{t('link6')}</Button>
-            <Button href="https://giveth.io/donate/">{t('link7')}</Button>
-          </NavItem>
+          <ButtonsContainer>
+            <ButtonLink href="https://giveth.io/join/" width="100%" mr={1}>{t('link6')}</ButtonLink>
+            <ButtonLink href="https://giveth.io/donate/" width="100%" ml={1}>{t('link7')}</ButtonLink>
+          </ButtonsContainer>
         </Nav>}
       </div>
     );

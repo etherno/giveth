@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const Button = styled.div`
+import { Box } from 'grid-styled';
+
+const buttonStyles = css`
   padding: .5rem 1rem;
   border: 2px solid ${({ color }) => color || 'white'};
   background-color: ${({ bgColor }) => bgColor || '#2c0d54'};
@@ -12,6 +14,8 @@ const Button = styled.div`
   font-weight: 600;
   color: ${({ color }) => color || 'white'};
   width: 100%;
+  text-decoration: none;
+  display: block;
   box-sizing: border-box;
   &:hover {
     background-color: ${({ color }) => color || 'white'};
@@ -19,8 +23,21 @@ const Button = styled.div`
   }
 `
 
-export default (props) => (
-  <Button {...props}>
-    {props.children}
-  </Button>
+const StyledButton = styled.div`${buttonStyles}`
+const StyledButtonLink = styled.a`${buttonStyles}`
+
+export const Button = (props) => (
+  <Box {...props}>
+    <StyledButton {...props}>
+      {props.children}
+    </StyledButton>
+  </Box>
+)
+
+export const ButtonLink = (props) => (
+  <Box {...props}>
+    <StyledButtonLink {...props}>
+      {props.children}
+    </StyledButtonLink>
+  </Box>
 )

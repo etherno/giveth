@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import fscreen from 'fscreen'
 
 import {Flex, Box} from 'grid-styled';
-import Button from './Button';
+import { Button, ButtonLink} from './Button';
 
 const Container = styled.div`
   box-shadow: 1px 1px 10px 0 rgba(0,0,0,.25);
@@ -12,10 +13,6 @@ const Container = styled.div`
 const Video = styled.video`
   margin-bottom: -5px;
   width: 100%;
-`
-
-const Content = styled.div`
-  padding: 1rem;
 `
 
 const Title = styled.p`
@@ -50,29 +47,43 @@ const Items = styled.p`
   color: #2c0d53;
 `
 
-const ButtonsContainer = styled.div`
-  margin: 0;
-  margin-top: 1rem;
-`
-
-const Link = styled.a`
-  color:inherit;
-  text-decoration: none;
-`
-
-class Card extends Component {
+class MediaCard extends Component {
   constructor(props) {
     super(props)
     this.state = {}
   }
 
+  handleMouseEnter() {
+    this.video.play()
+    // this.refs.vidRef.play();
+  }
+
+  handleMouseLeave() {
+    this.video.controls = false;
+    if (!window.screenTop && !window.screenY) {
+      this.video.muted = true;
+    }
+  }
+
+  watchVideo() {
+    fscreen.requestFullscreen(this.video);
+    this.video.pause();
+    this.video.currentTime = 0;
+    this.video.muted = false;
+    this.video.play();
+  };
+
   render() {
     const { src, title, description, wall, wallet, social, timestamp } = this.props;
     const date = dayjs(timestamp).format('HH:mm DD-MM-YYYY');
+
     return (
-      <Container>
-        <Video src={src} />
-        <Content>
+      <Container
+        onMouseEnter={this.handleMouseEnter.bind(this)}
+        onMouseLeave={this.handleMouseLeave.bind(this)}
+      >
+        <Video src={src} muted innerRef={(ref) => this.video = ref} />
+        <Box p={3}>
           <Title>{title || 'No title'}</Title>
           <Date><span className="fa fa-clock-o" aria-hidden="true" /> {date}</Date>
           <Description>{description || 'No description'}</Description>
@@ -80,27 +91,22 @@ class Card extends Component {
           {social && <Items><span className="fa fa-user" aria-hidden="true" /> SOCIAL: {social}</Items>}
           {wallet && <Items><span className="fa fa-address-card" aria-hidden="true" /> WALLET: {wallet}</Items>}
           <Box mt={3}>
-            <Button color="#2c0d54" bgColor="white">
+            <Button color="#2c0d54" bgColor="white" onClick={this.watchVideo.bind(this)}>
               WATCH <span className="fa fa-video-camera" aria-hidden="true" />
             </Button>
             <Flex mt={2}>
-              <Box width="100%" mr={2}>
-                <Button color="#2c0d54" bgColor="white">
-                  <Link href={src}>FIREBASE </Link>
-                  <span className="fa fa-database" aria-hidden="true" />
-                </Button>
-              </Box>
-              <Box width="100%" ml={2}>
-                <Button color="#2c0d54" bgColor="white">
+                <ButtonLink href={src} width="100%" mr={1} color="#2c0d54" bgColor="white">
+                FIREBASE <span className="fa fa-database" aria-hidden="true" />
+                </ButtonLink>
+                <Button width="100%" ml={1} color="#2c0d54" bgColor="white">
                   SHARE <span className="fa fa-share" aria-hidden="true" />
                 </Button>
-              </Box>
             </Flex>
           </Box>
-        </Content>
+        </Box>
       </Container>
     )
   }
 }
 
-export default Card;
+export default MediaCard;

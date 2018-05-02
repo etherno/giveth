@@ -12,9 +12,9 @@ import styled from 'styled-components';
 // import VideoWallOfFameHeader from "../VideoWallOfFameHeader";
 // import logo from "../../img/wall-of-fame-logo-new.svg";
 
-import Card from './Card';
+import MediaCard from './MediaCard';
 
-class VideoWallOfFame extends Component {
+class Wall extends Component {
   constructor(props) {
     super(props)
 
@@ -149,8 +149,8 @@ class VideoWallOfFame extends Component {
         }}
       >
         <Masonry gutter=".5rem">
-          {media.length && media[1].map((props) => <div style={{bottom: '-5px'}} >
-            <Card {...props}  />
+          {media.length && media[2].map((props) => <div style={{bottom: '-5px'}} >
+            <MediaCard {...props} />
           </div>)}
         </Masonry>
       </ResponsiveMasonry>
@@ -158,4 +158,4 @@ class VideoWallOfFame extends Component {
   }
 }
 
-export default VideoWallOfFame;
+export default Wall;
