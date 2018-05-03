@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import fscreen from 'fscreen'
+import * as Clipboard from 'clipboard';
 
 import {Flex, Box} from 'grid-styled';
+import { Tooltip } from './Tooltip';
 import { Button, ButtonLink} from './Button';
+
+new Clipboard('.copy-to-clipboard');
 
 const Container = styled.div`
   box-shadow: 1px 1px 10px 0 rgba(0,0,0,.25);
@@ -74,7 +78,7 @@ class MediaCard extends Component {
   };
 
   render() {
-    const { src, title, description, wall, wallet, social, timestamp } = this.props;
+    const { src, title, description, wall, wallet, social, timestamp, id } = this.props;
     const date = dayjs(timestamp).format('HH:mm DD-MM-YYYY');
 
     return (
@@ -91,16 +95,18 @@ class MediaCard extends Component {
           {social && <Items><span className="fa fa-user" aria-hidden="true" /> SOCIAL: {social}</Items>}
           {wallet && <Items><span className="fa fa-address-card" aria-hidden="true" /> WALLET: {wallet}</Items>}
           <Box mt={3}>
-            <Button color="#2c0d54" bgColor="white" onClick={this.watchVideo.bind(this)}>
+            <Button color="#2c0d54" bgcolor="white" onClick={this.watchVideo.bind(this)}>
               WATCH <span className="fa fa-video-camera" aria-hidden="true" />
             </Button>
             <Flex mt={2}>
-                <ButtonLink href={src} width="100%" mr={1} color="#2c0d54" bgColor="white">
+              <ButtonLink href={src} width="100%" mr={1} color="#2c0d54" bgcolor="white">
                 FIREBASE <span className="fa fa-database" aria-hidden="true" />
-                </ButtonLink>
-                <Button width="100%" ml={1} color="#2c0d54" bgColor="white">
+              </ButtonLink>
+              <Tooltip width="100%" ml={1} bgcolor="#2c0d54" message="Copied link to clipboard!">
+                <Button className="copy-to-clipboard" color="#2c0d54" bgcolor="white" data-clipboard-text={"https://fame.giveth.io/view/" + id}>
                   SHARE <span className="fa fa-share" aria-hidden="true" />
                 </Button>
+              </Tooltip>
             </Flex>
           </Box>
         </Box>

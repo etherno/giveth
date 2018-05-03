@@ -6,7 +6,7 @@ import { Box } from 'grid-styled';
 const buttonStyles = css`
   padding: .5rem 1rem;
   border: 2px solid ${({ color }) => color || 'white'};
-  background-color: ${({ bgColor }) => bgColor || '#2c0d54'};
+  background-color: ${({ bgcolor }) => bgcolor || '#2c0d54'};
   border-radius: .25rem;
   cursor: pointer;
   text-align: center;
@@ -19,7 +19,7 @@ const buttonStyles = css`
   box-sizing: border-box;
   &:hover {
     background-color: ${({ color }) => color || 'white'};
-    color: ${({ bgColor }) => bgColor || '#2c0d54'};
+    color: ${({ bgcolor }) => bgcolor || '#2c0d54'};
   }
 `
 
