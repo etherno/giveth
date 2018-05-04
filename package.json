@@ -24,6 +24,7 @@
     "i18next-node-fs-backend": "^1.0.0",
     "i18next-xhr-backend": "^1.5.1",
     "next": "^5.1.0",
+    "next-routes": "^1.4.1",
     "react": "^16.3.1",
     "react-aria-tooltip": "https://github.com/deamme/react-aria-tooltip.git",
     "react-dom": "^16.3.1",

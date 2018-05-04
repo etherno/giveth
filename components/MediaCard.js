@@ -4,11 +4,9 @@ import dayjs from 'dayjs';
 import fscreen from 'fscreen'
 import * as Clipboard from 'clipboard';
 
-import {Flex, Box} from 'grid-styled';
+import { Flex, Box } from 'grid-styled';
 import { Tooltip } from './Tooltip';
 import { Button, ButtonLink} from './Button';
-
-new Clipboard('.copy-to-clipboard');
 
 const Container = styled.div`
   box-shadow: 1px 1px 10px 0 rgba(0,0,0,.25);
@@ -55,6 +53,10 @@ class MediaCard extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+  }
+
+  componentDidMount() {
+    new Clipboard('.copy-to-clipboard');
   }
 
   handleMouseEnter() {

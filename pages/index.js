@@ -1,31 +1,12 @@
 import React, { Component } from "react";
-import firebase from "firebase";
-// import { isMobile } from "../lib/platformChecker";
 import styled from 'styled-components';
+import { withI18next } from '../lib/withI18next';
+import initFirebase from '../lib/initFirebase';
 
-// components
 import MainMenu from "../components/MainMenu";
 import Wall from "../components/Wall";
 
-import { withI18next } from '../lib/withI18next'
-
-// // views
-// import VideoWallOfFame from "./../components/views/VideoWallOfFame.js";
-// import CampaignsVideosViewer from "./../components/views/CampaignsVideosViewer.js";
-// import MediaCaptureiOS from "./../components/views/MediaCapture_iOS.js";
-// import MediaCaptureWeb from "./../components/views/MediaCapture_Web.js";
-
-var config = {
-  apiKey: "AIzaSyAGO0q7WjakjW2vNyxIVThAVPWxm-xozj8",
-  authDomain: "givethvideowalloffame.firebaseapp.com",
-  databaseURL: "https://givethvideowalloffame.firebaseio.com",
-  projectId: "givethvideowalloffame",
-  storageBucket: "givethvideowalloffame.appspot.com",
-  messagingSenderId: "271393366127"
-};
-
-// Next.js firebase bug workaround when in development
-!firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
+initFirebase();
 
 const Header = styled.div`
   padding: 2rem;
