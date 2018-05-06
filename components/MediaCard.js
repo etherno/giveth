@@ -105,7 +105,7 @@ class MediaCard extends Component {
                 FIREBASE <span className="fa fa-database" aria-hidden="true" />
               </ButtonLink>
               <Tooltip width="100%" ml={1} bgcolor="#2c0d54" message="Copied link to clipboard!">
-                <Button className="copy-to-clipboard" color="#2c0d54" bgcolor="white" data-clipboard-text={"https://fame.giveth.io/view/" + id}>
+                <Button className="copy-to-clipboard" color="#2c0d54" bgcolor="white" data-clipboard-text={location.origin + "/view/" + id}>
                   SHARE <span className="fa fa-share" aria-hidden="true" />
                 </Button>
               </Tooltip>

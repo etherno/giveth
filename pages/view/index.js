@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import firebase from "firebase";
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 import { withI18next } from "../../lib/withI18next";
 import initFirebase from "../../lib/initFirebase";
 
 
-import { Box } from 'grid-styled';
+import { Flex, Box } from 'grid-styled';
 import MainMenu from "../../components/MainMenu";
+import { Button, ButtonLink } from "../../components/Button";
 
 initFirebase();
 
@@ -14,7 +16,6 @@ const Container = styled.div`
   margin 0 auto;
   max-width 48rem;
   margin-top: 6rem;
-  text-align: center;
 `
 
 const Video = styled.video`
@@ -24,6 +25,31 @@ const Video = styled.video`
 const Title = styled.h1`
   font-family: Quicksand;
   color: #2c0d54;
+  text-align: center;
+`
+
+const Date = styled.p`
+  margin: 0;
+  margin-bottom: .5rem;
+  font-family: Quicksand;
+  font-size: 12px;
+  color: #2c0d53;
+`
+
+const Description = styled.p`
+  margin: 0;
+  font-family: Quicksand;
+  font-size: 14px;
+  color: #2c0d53;
+`
+
+const Items = styled.p`
+  margin: 0;
+  margin-top: .5rem;
+  font-family: Quicksand;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2c0d53;
 `
 
 class View extends Component {
@@ -53,12 +79,32 @@ class View extends Component {
 
   render() {
     const { media } = this.state;
+    let date;
+    if (media) {
+      date = dayjs(media.timestamp).format('HH:mm DD-MM-YYYY');
+    }
     return (
       <div>
         <MainMenu />
         <Container>
           <Title>{media && media.title}</Title>
           <Video src={media && media.src} loop controls autoPlay />
+          {media &&
+          (<Box p={3}>
+            <Date><span className="fa fa-clock-o" aria-hidden="true" /> {date}</Date>
+            <Description>{media.description || 'No description'}</Description>
+            <Items><span className="fa fa-th-large" aria-hidden="true" /> WALL: {media.wall.split('_').join(' ')}</Items>
+            <Items><span className="fa fa-user" aria-hidden="true" /> SOCIAL: {media.social}</Items>
+            <Items><span className="fa fa-address-card" aria-hidden="true" /> WALLET: {media.wallet}</Items>
+            <Box mt={3}>
+              <Flex mt={2}>
+                <ButtonLink href={media.src} width="100%" mr={1} color="#2c0d54" bgcolor="white">
+                  FIREBASE <span className="fa fa-database" aria-hidden="true" />
+                </ButtonLink>
+              </Flex>
+            </Box>
+          </Box>)
+          }
         </Container>
       </div>
     );
