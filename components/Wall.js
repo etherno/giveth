@@ -13,34 +13,41 @@ import styled from 'styled-components';
 // import logo from "../../img/wall-of-fame-logo-new.svg";
 
 import MediaCard from './MediaCard';
+import { Button } from './Button';
+
+const Container = styled.div`
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 48rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const Text = styled.p`
+  margin: 0;
+  font-family: Quicksand;
+  font-weight: 600;
+  font-size: 28px;
+  color: #2c0d54;
+`
 
 class Wall extends Component {
   constructor(props) {
     super(props)
 
-    var _wall = "";
-    var _currentweek = moment().format("WW_MM_YYYY")
-    var _week = "";
-
-    _week = _currentweek
-
-    // if (props.match.params.wall) {
-    //   _wall = props.match.params.wall
-    // }
-
     this.state = {
       media: [],
       currentMedia: [],
-      wall: _wall,
-      currentweek: _currentweek,
-      week: _week,
+      wall: "",
+      week: props.week || moment().format("WW_MM_YYYY"),
       previous: null,
       next: null,
     }
   }
 
   componentDidMount() {
-    const ref = firebase.database().ref("GVWOF_v2/")
+    const ref = firebase.database().ref("GVWOF_v2/");
     ref.on('value', this.gotData, (err) => console.log(err));
   }
 
@@ -115,45 +122,53 @@ class Wall extends Component {
     //   wall = newProps.match.params.wall
     // }
 
-    let index, next, previous
-    const media = this.state.media
-    media.forEach((list, idx) => {
-      list.forEach((video) => {
-        if (video.week === week) {
-          index = idx
-          previous = media[idx + 1] ? media[idx + 1][0].week : null
-          next = media[idx - 1] ? media[idx - 1][0].week : null
-        }
-      })
-    })
+    // let index, next, previous
+    // const media = this.state.media
+    // media.forEach((list, idx) => {
+    //   list.forEach((video) => {
+    //     if (video.week === week) {
+    //       index = idx
+    //       previous = media[idx + 1] ? media[idx + 1][0].week : null
+    //       next = media[idx - 1] ? media[idx - 1][0].week : null
+    //     }
+    //   })
+    // })
 
-    this.setState({
-      currentMedia: this.state.wall ? this.state.media[index].filter((video) => video.wall === this.state.wall) : this.state.media[index],
-      next,
-      previous,
-      week,
-      wall
-    })
+    // this.setState({
+    //   currentMedia: this.state.wall ? this.state.media[index].filter((video) => video.wall === this.state.wall) : this.state.media[index],
+    //   next,
+    //   previous,
+    //   week,
+    //   wall
+    // })
   }
 
   render() {
-    const { media } = this.state;
+    const { media, currentMedia, week } = this.state;
+    const date = week.split("_");
     return (
-      <ResponsiveMasonry
-        columnsCountBreakPoints={{
-          350: 1,
-          750: 2,
-          900: 2,
-          1024: 3,
-          1470: 3,
-        }}
-      >
-        <Masonry gutter=".5rem">
-          {media.length && media[2].map((props) => <div style={{bottom: '-5px'}} >
-            <MediaCard {...props} />
-          </div>)}
-        </Masonry>
-      </ResponsiveMasonry>
+      <div>
+        <Container>
+          <Button color="#2c0d54" bgcolor="white">NEXT WEEK</Button>
+          <Text>WEEK {date[0]} - {date[2]}</Text>
+          <Button color="#2c0d54" bgcolor="white">PREVIOUS WEEK</Button>
+        </Container>
+        <ResponsiveMasonry
+          columnsCountBreakPoints={{
+            350: 1,
+            750: 2,
+            900: 2,
+            1024: 3,
+            1470: 3,
+          }}
+        >
+          <Masonry gutter=".5rem">
+            {currentMedia && currentMedia.map((props) => <div style={{bottom: '-5px'}} >
+              <MediaCard {...props} />
+            </div>)}
+          </Masonry>
+        </ResponsiveMasonry>
+      </div>
     )
   }
 }

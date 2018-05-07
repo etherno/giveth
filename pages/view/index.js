@@ -86,26 +86,26 @@ class View extends Component {
     return (
       <div>
         <MainMenu />
-        <Container>
-          <Title>{media && media.title}</Title>
-          <Video src={media && media.src} loop controls autoPlay />
-          {media &&
-          (<Box p={3}>
-            <Date><span className="fa fa-clock-o" aria-hidden="true" /> {date}</Date>
-            <Description>{media.description || 'No description'}</Description>
-            <Items><span className="fa fa-th-large" aria-hidden="true" /> WALL: {media.wall.split('_').join(' ')}</Items>
-            <Items><span className="fa fa-user" aria-hidden="true" /> SOCIAL: {media.social}</Items>
-            <Items><span className="fa fa-address-card" aria-hidden="true" /> WALLET: {media.wallet}</Items>
-            <Box mt={3}>
-              <Flex mt={2}>
-                <ButtonLink href={media.src} width="100%" mr={1} color="#2c0d54" bgcolor="white">
-                  FIREBASE <span className="fa fa-database" aria-hidden="true" />
-                </ButtonLink>
-              </Flex>
+        {media &&
+          <Container>
+            <Title>{media.title}</Title>
+            <Video src={media.src} loop controls autoPlay />
+            <Box p={3}>
+              <Date><span className="fa fa-clock-o" aria-hidden="true" /> {date}</Date>
+              <Description>{media.description || 'No description'}</Description>
+              <Items><span className="fa fa-th-large" aria-hidden="true" /> WALL: {media.wall.split('_').join(' ')}</Items>
+              <Items><span className="fa fa-user" aria-hidden="true" /> SOCIAL: {media.social}</Items>
+              <Items><span className="fa fa-address-card" aria-hidden="true" /> WALLET: {media.wallet}</Items>
+              <Box mt={3}>
+                <Flex mt={2}>
+                  <ButtonLink href={media.src} width="100%" mr={1} color="#2c0d54" bgcolor="white">
+                    FIREBASE <span className="fa fa-database" aria-hidden="true" />
+                  </ButtonLink>
+                </Flex>
+              </Box>
             </Box>
-          </Box>)
-          }
-        </Container>
+          </Container>
+        }
       </div>
     );
   }

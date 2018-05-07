@@ -6,7 +6,7 @@ import * as Clipboard from 'clipboard';
 
 import { Flex, Box } from 'grid-styled';
 import { Tooltip } from './Tooltip';
-import { Button, ButtonLink} from './Button';
+import { Button, ButtonLink } from './Button';
 
 const Container = styled.div`
   box-shadow: 1px 1px 10px 0 rgba(0,0,0,.25);
@@ -61,7 +61,6 @@ class MediaCard extends Component {
 
   handleMouseEnter() {
     this.video.play()
-    // this.refs.vidRef.play();
   }
 
   handleMouseLeave() {
