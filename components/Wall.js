@@ -1,19 +1,14 @@
 import React, { Component } from "react";
-// import MediaCard from "../MediaCard";
 import firebase from "firebase";
-// import { Link } from "react-router-dom";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import moment from "moment";
 import styled from 'styled-components';
-// import { OverlayTrigger, Popover } from "react-bootstrap";
-// import { isMobile } from "../../lib/platformChecker";
 
-// import AddNewMediaButton from "../AddNewMediaButton";
-// import VideoWallOfFameHeader from "../VideoWallOfFameHeader";
-// import logo from "../../img/wall-of-fame-logo-new.svg";
-
+import { Box } from 'grid-styled';
 import MediaCard from './MediaCard';
 import { Button } from './Button';
+
+import { Link } from '../routes';
 
 const Container = styled.div`
   padding: 2rem;
@@ -109,49 +104,47 @@ class Wall extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    var week = "";
+    var week = newProps.week;
     var wall = "";
 
-    // if (!newProps.match.params.week) {
-    //   week = moment().format("WW_MM_YYYY")
-    // } else {
-    //   week = newProps.match.params.week
-    // }
+    let index, next, previous
+    const media = this.state.media
+    media.forEach((list, idx) => {
+      list.forEach((video) => {
+        if (video.week === week) {
+          index = idx
+          previous = media[idx + 1] ? media[idx + 1][0].week : null
+          next = media[idx - 1] ? media[idx - 1][0].week : null
+        }
+      })
+    })
 
-    // if (newProps.match.params.wall) {
-    //   wall = newProps.match.params.wall
-    // }
-
-    // let index, next, previous
-    // const media = this.state.media
-    // media.forEach((list, idx) => {
-    //   list.forEach((video) => {
-    //     if (video.week === week) {
-    //       index = idx
-    //       previous = media[idx + 1] ? media[idx + 1][0].week : null
-    //       next = media[idx - 1] ? media[idx - 1][0].week : null
-    //     }
-    //   })
-    // })
-
-    // this.setState({
-    //   currentMedia: this.state.wall ? this.state.media[index].filter((video) => video.wall === this.state.wall) : this.state.media[index],
-    //   next,
-    //   previous,
-    //   week,
-    //   wall
-    // })
+    this.setState({
+      currentMedia: this.state.wall ? this.state.media[index].filter((video) => video.wall === this.state.wall) : this.state.media[index],
+      next,
+      previous,
+      week,
+      wall
+    })
   }
 
   render() {
-    const { media, currentMedia, week } = this.state;
+    const { media, currentMedia, week, next, previous } = this.state;
     const date = week.split("_");
     return (
       <div>
         <Container>
-          <Button color="#2c0d54" bgcolor="white">NEXT WEEK</Button>
+          {next ?
+            <Link route={`/week/${next}`}>
+              <Button color="#2c0d54" bgcolor="white">NEXT WEEK</Button>
+            </Link> : <Box width="125px" />
+          }
           <Text>WEEK {date[0]} - {date[2]}</Text>
-          <Button color="#2c0d54" bgcolor="white">PREVIOUS WEEK</Button>
+          {previous ?
+            <Link route={`/week/${previous}`}>
+              <Button color="#2c0d54" bgcolor="white">PREVIOUS WEEK</Button>
+            </Link> : <Box width="162px" />
+          }
         </Container>
         <ResponsiveMasonry
           columnsCountBreakPoints={{
