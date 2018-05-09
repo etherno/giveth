@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import firebase from "firebase";
 import styled from 'styled-components';
-import dayjs from 'dayjs';
+import moment from 'moment';
 import { withI18next } from "../../lib/withI18next";
 import initFirebase from "../../lib/initFirebase";
 
@@ -81,7 +81,7 @@ class View extends Component {
     const { media } = this.state;
     let date;
     if (media) {
-      date = dayjs(media.timestamp).format('HH:mm DD-MM-YYYY');
+      date = moment(media.timestamp).format('HH:mm DD-MM-YYYY');
     }
     return (
       <div>

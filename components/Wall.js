@@ -27,6 +27,25 @@ const Text = styled.p`
   color: #2c0d54;
 `
 
+const UploadButton = styled.button`
+  z-index: 10000;
+  background-color: #2c0d54;
+  padding: 0;
+  border-radius: 50%;
+  margin: 0;
+  top: auto;
+  right: 3%;
+  bottom: 3%;
+  left: auto;
+  position: fixed;
+  border: 3px solid #f5f5f5;
+  display: flex;
+  cursor: pointer;
+  &:hover {
+    border: 3px solid #2c0d54;
+  }
+`
+
 class Wall extends Component {
   constructor(props) {
     super(props)
@@ -104,7 +123,7 @@ class Wall extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    var week = newProps.week;
+    var week = newProps.week || moment().format("WW_MM_YYYY");
     var wall = "";
 
     let index, next, previous
@@ -161,6 +180,11 @@ class Wall extends Component {
             </div>)}
           </Masonry>
         </ResponsiveMasonry>
+        <Link route="/upload">
+          <UploadButton>
+            <svg class="svgIcon" width="48px" height="48px" viewBox="0 0 48 48"><path d="M38 26H26v12h-4V26H10v-4h12V10h4v12h12v4z" fill="white"></path></svg>
+          </UploadButton>
+        </Link>
       </div>
     )
   }
