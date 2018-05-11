@@ -7,7 +7,8 @@ import initFirebase from "../../lib/initFirebase";
 
 
 import { Flex, Box } from 'grid-styled';
-import MainMenu from "../../components/MainMenu";
+import MobileNav from "../../components/MobileNav";
+import MainNav from "../../components/MainNav";
 import { Button, ButtonLink } from "../../components/Button";
 
 initFirebase();
@@ -20,6 +21,7 @@ const Container = styled.div`
 
 const Video = styled.video`
   max-width 48rem;
+  width: 100%;
 `
 
 const Title = styled.h1`
@@ -85,7 +87,8 @@ class View extends Component {
     }
     return (
       <div>
-        <MainMenu />
+        <MobileNav />
+        <MainNav />
         {media &&
           <Container>
             <Title>{media.title}</Title>

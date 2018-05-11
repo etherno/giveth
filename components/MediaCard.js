@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
-import dayjs from 'dayjs';
+import moment from 'moment';
 import fscreen from 'fscreen'
 import * as Clipboard from 'clipboard';
 
@@ -80,7 +80,7 @@ class MediaCard extends Component {
 
   render() {
     const { src, title, description, wall, wallet, social, timestamp, id } = this.props;
-    const date = dayjs(timestamp).format('HH:mm DD-MM-YYYY');
+    const date = moment(timestamp).format('HH:mm DD-MM-YYYY');
 
     return (
       <Container

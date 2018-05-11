@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 import { translate } from 'react-i18next'
 
-import { Flex } from 'grid-styled';
 import { BurgerIcon, CrossIcon } from './Icons';
 import { ButtonLink } from './Button';
 
@@ -10,6 +9,9 @@ const MenuContainer = styled.div`
   display: flex;
   background-color: #2c0d54;
   justify-content: space-between;
+  @media (min-width: 56em) {
+    display: none;
+  }
 `
 
 const BrandContainer = styled.div`
@@ -60,10 +62,10 @@ class MainMenu extends Component {
     showMenu: false
   }
 
-  componentWillMount() {
-    const { i18n } = this.props
-    i18n.changeLanguage('de')
-  }
+  // componentWillMount() {
+  //   const { i18n } = this.props
+  //   i18n.changeLanguage('de')
+  // }
 
   render() {
     const { t } = this.props
