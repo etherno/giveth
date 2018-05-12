@@ -7,7 +7,8 @@ import initFirebase from "../../lib/initFirebase";
 
 
 import { Flex, Box } from 'grid-styled';
-import MainMenu from "../../components/MainMenu";
+import MobileNav from "../../components/MobileNav";
+import MainNav from "../../components/MainNav";
 import { Button, ButtonLink } from "../../components/Button";
 import { Link } from '../../routes'
 
@@ -17,6 +18,7 @@ const Container = styled.div`
   margin 0 auto;
   max-width 48rem;
   margin-top: 6rem;
+  padding: 0 2rem;
 `
 
 const Video = styled.video`
@@ -87,7 +89,8 @@ const Input = styled.input`
   padding: .75rem;
   border-radius: .25rem;
   border: 1px solid #ced4da;
-  width: 75%;
+  width: 100%;
+  box-sizing: border-box;
 `
 
 const InputRadio = styled.input`
@@ -102,14 +105,22 @@ class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      week: moment().format("WW_MM_YYYY")
+      week: moment().format("WW_MM_YYYY"),
+      title: '',
+      description: '',
+      social: '',
+      wallet: '',
+      category: '',
+      type: '',
     };
   }
 
   render() {
+    const { type } = this.state
     return (
       <div>
-        <MainMenu />
+        <MobileNav />
+        <MainNav />
         <Container>
           <Link route="/">
             <Back class="go-back-button"><span class="fa fa-long-arrow-left"></span> back</Back>
@@ -117,46 +128,52 @@ class View extends Component {
           <Title>Upload a new video or picture</Title>
           <FormGroup>
             <Label>Title</Label>
-            <Input type="text" name="title" placeholder="E.g. Climate change." />
+            <Input type="text" name="title" placeholder="E.g. Climate change." onChange={(e) => this.setState({ title: e.target.value })} />
           </FormGroup>
           <FormGroup>
             <Label>Description</Label>
-            <Input type="text" name="title" placeholder="Description of Climate change." />
+            <Input type="text" name="description" placeholder="Description of Climate change." onChange={(e) => this.setState({ description: e.target.value })} />
           </FormGroup>
           <FormGroup>
             <Label>Slack/Riot handle</Label>
-            <Input type="text" name="title" placeholder="What's your name on Slack/Riot.im?" />
+            <Input type="text" name="social" placeholder="What's your name on Slack/Riot.im?" onChange={(e) => this.setState({ social: e.target.value })} />
           </FormGroup>
           <FormGroup>
             <Label>Public wallet address (Metamask, MEW,...)</Label>
-            <Input type="text" name="title" placeholder="Provide wallet address to e.g. get rewarded" />
+            <Input type="text" name="wallet" placeholder="Provide wallet address to e.g. get rewarded" onChange={(e) => this.setState({ wallet: e.target.value })} />
           </FormGroup>
           <FormGroup>
             <Label>Choose video category</Label>
-            <LabelRadio>
-              <InputRadio type="radio" value="on" name="category" />
+            <LabelRadio onClick={() => this.setState({ category: 'Reward_DAO' })}>
+              <InputRadio type="radio" name="category" />
               RewardDAO
             </LabelRadio>
-            <LabelRadio>
-              <InputRadio type="radio" value="on" name="category" />
+            <LabelRadio onClick={() => this.setState({ category: 'Regular_Rewards' })}>
+              <InputRadio type="radio" name="category" />
               Regular Rewards
             </LabelRadio>
           </FormGroup>
           <FormGroup>
             <Label>Choose type of video</Label>
-            <LabelRadio>
-              <InputRadio type="radio" value="on" name="type" />
+            <LabelRadio onClick={() => this.setState({ type: 'file' })}>
+              <InputRadio type="radio" name="type" />
+              File
+            </LabelRadio>
+            <LabelRadio onClick={() => this.setState({ type: 'camera' })}>
+              <InputRadio type="radio" name="type" />
               Camera
             </LabelRadio>
-            <LabelRadio>
-              <InputRadio type="radio" value="on" name="type" />
+            <LabelRadio onClick={() => this.setState({ type: 'screen' })}>
+              <InputRadio type="radio" name="type" />
               Screen sharing
             </LabelRadio>
           </FormGroup>
-          <FormGroup>
-            <Label>Choose video file</Label>
-            <Input type="file" accept="image/*;video/*" />
-          </FormGroup>
+          {type === 'file' &&
+            <FormGroup>
+              <Label>Choose video file</Label>
+              <Input type="file" accept="image/*;video/*" />
+            </FormGroup>
+          }
         </Container>
       </div>
     );
