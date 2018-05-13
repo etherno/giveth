@@ -112,11 +112,29 @@ class View extends Component {
       wallet: '',
       category: '',
       type: '',
+      file: null,
+      upload: false,
     };
   }
 
+  handleFile(e) {
+    this.setState({
+      file: URL.createObjectURL(e.target.files[0]),
+      upload: true,
+    })
+  }
+
+  handleUpload() {
+    console.log('Uploading!')
+    const { title, description, social, wallet, category  } = this.state
+    if ([title, description, social, wallet, category].filter((element) => !element).length) {
+      return alert("You're missing a field! Please check again.")
+    }
+  }
+
   render() {
-    const { type } = this.state
+    const { type, file, upload } = this.state
+    console.log(this.state)
     return (
       <div>
         <MobileNav />
@@ -171,9 +189,12 @@ class View extends Component {
           {type === 'file' &&
             <FormGroup>
               <Label>Choose video file</Label>
-              <Input type="file" accept="image/*;video/*" />
+              <Input type="file" accept="image/*;video/*" onChange={this.handleFile.bind(this)} />
             </FormGroup>
           }
+          {file && <Video controls autoPlay src={file} />}
+          {/* Fix button double events */}
+          {upload && <FormGroup><Button color="#2c0d54" bgcolor="white" onClick={this.handleUpload.bind(this)}>Upload</Button></FormGroup>}
         </Container>
       </div>
     );
