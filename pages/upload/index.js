@@ -132,9 +132,33 @@ class View extends Component {
     }
   }
 
+  handleCamera() {
+    const params = { audio: true, video: true };
+    navigator.getUserMedia(params, (stream) => {
+      navigator.mediaDevices
+        .getUserMedia({ video: true, audio: true })
+        .then(function(cameraStream) {
+          this.setState({
+              cameraStream,
+              stream: new window.MultiStreamsMixer([cameraStream])
+            },
+            () => {
+              this.state.stream.frameInterval = 1;
+              this.state.stream.startDrawingFrames();
+              window.setSrcObject(
+                this.state.stream.getMixedStream(),
+                document.querySelector("video")
+              );
+            }
+          );
+        });
+    }, (err) => {
+      alert('No camera devices found')
+    })
+  }
+
   render() {
     const { type, file, upload } = this.state
-    console.log(this.state)
     return (
       <div>
         <MobileNav />
@@ -162,27 +186,27 @@ class View extends Component {
           </FormGroup>
           <FormGroup>
             <Label>Choose video category</Label>
-            <LabelRadio onClick={() => this.setState({ category: 'Reward_DAO' })}>
-              <InputRadio type="radio" name="category" />
+            <LabelRadio>
+              <InputRadio type="radio" name="category" onClick={() => this.setState({ category: 'Reward_DAO' })} />
               RewardDAO
             </LabelRadio>
-            <LabelRadio onClick={() => this.setState({ category: 'Regular_Rewards' })}>
-              <InputRadio type="radio" name="category" />
+            <LabelRadio>
+              <InputRadio type="radio" name="category" onClick={() => this.setState({ category: 'Regular_Rewards' })} />
               Regular Rewards
             </LabelRadio>
           </FormGroup>
           <FormGroup>
             <Label>Choose type of video</Label>
-            <LabelRadio onClick={() => this.setState({ type: 'file' })}>
-              <InputRadio type="radio" name="type" />
+            <LabelRadio>
+              <InputRadio type="radio" name="type" onClick={() => this.setState({ type: 'file' })} />
               File
             </LabelRadio>
-            <LabelRadio onClick={() => this.setState({ type: 'camera' })}>
-              <InputRadio type="radio" name="type" />
+            <LabelRadio>
+              <InputRadio type="radio" name="type" onClick={this.handleCamera.bind(this)} />
               Camera
             </LabelRadio>
-            <LabelRadio onClick={() => this.setState({ type: 'screen' })}>
-              <InputRadio type="radio" name="type" />
+            <LabelRadio>
+              <InputRadio type="radio" name="type" onClick={() => this.setState({ type: 'screen' })} />
               Screen sharing
             </LabelRadio>
           </FormGroup>

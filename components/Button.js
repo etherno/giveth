@@ -27,11 +27,11 @@ const StyledButton = styled.div`${buttonStyles}`
 const StyledButtonLink = styled.a`${buttonStyles}`
 
 export const Button = (props) => (
-  <Box {...props}>
+  <div>
     <StyledButton {...props}>
       {props.children}
     </StyledButton>
-  </Box>
+  </div>
 )
 
 export const ButtonLink = (props) => (
