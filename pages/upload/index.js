@@ -147,7 +147,7 @@ class View extends Component {
               this.state.stream.startDrawingFrames();
               window.setSrcObject(
                 this.state.stream.getMixedStream(),
-                document.querySelector("video")
+                document.getElementById("video")
               );
             }
           );
@@ -158,7 +158,7 @@ class View extends Component {
   }
 
   render() {
-    const { type, file, upload } = this.state
+    const { type, file, upload, cameraStream } = this.state
     return (
       <div>
         <MobileNav />
@@ -216,6 +216,7 @@ class View extends Component {
               <Input type="file" accept="image/*;video/*" onChange={this.handleFile.bind(this)} />
             </FormGroup>
           }
+          {cameraStream && <Video id="video" />}
           {file && <Video controls autoPlay src={file} />}
           {/* Fix button double events */}
           {upload && <FormGroup><Button color="#2c0d54" bgcolor="white" onClick={this.handleUpload.bind(this)}>Upload</Button></FormGroup>}
