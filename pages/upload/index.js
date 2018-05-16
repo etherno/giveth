@@ -218,7 +218,6 @@ class View extends Component {
           }
           {cameraStream && <Video id="video" />}
           {file && <Video controls autoPlay src={file} />}
-          {/* Fix button double events */}
           {upload && <FormGroup><Button color="#2c0d54" bgcolor="white" onClick={this.handleUpload.bind(this)}>Upload</Button></FormGroup>}
         </Container>
       </div>
