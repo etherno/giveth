@@ -26,6 +26,12 @@ export default class MyDocument extends Document {
           <noscript>You need to enable JavaScript to run this app.</noscript>
           <Main />
           <NextScript />
+          <script src="https://cdn.webrtc-experiment.com/MultiStreamsMixer.js"></script>
+          <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+          <script src="https://cdn.webrtc-experiment.com/getScreenId.js"></script>
+          {/* <script src="https://cdn.webrtc-experiment.com/FileSelector.js"></script> */}
+          <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
+          {/* <script src="https://cdn.webrtc-experiment.com/getHTMLMediaElement.js"></script> */}
         </body>
       </html>
     )
