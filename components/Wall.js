@@ -182,7 +182,7 @@ class Wall extends Component {
         </ResponsiveMasonry>
         <Link route="/upload">
           <UploadButton>
-            <svg class="svgIcon" width="48px" height="48px" viewBox="0 0 48 48"><path d="M38 26H26v12h-4V26H10v-4h12V10h4v12h12v4z" fill="white"></path></svg>
+            <svg className="svgIcon" width="48px" height="48px" viewBox="0 0 48 48"><path d="M38 26H26v12h-4V26H10v-4h12V10h4v12h12v4z" fill="white"></path></svg>
           </UploadButton>
         </Link>
       </div>

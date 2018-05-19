@@ -130,7 +130,12 @@ class View extends Component {
       type: "",
       file: null,
       upload: false,
-      isExtensionInstalled: true
+      isExtensionInstalled: true,
+      recordVideo: null,
+      isRecording: false,
+      upload: false,
+      blob: null,
+      src: null,
     };
   }
 
@@ -221,6 +226,44 @@ class View extends Component {
     });
   }
 
+  handleRecord() {
+    if (!this.state.isRecording) {
+      this.startRecording()
+    } else {
+      this.stopRecording()
+    }
+  }
+
+  startRecording() {
+    this.setState(
+      {
+        recordVideo: RecordRTC(this.state.stream.getMixedStream(), {
+          type: "video",
+          previewStream: function(s) {
+            document.querySelector("video").muted = true;
+            window.setSrcObject(s, document.querySelector("video"));
+          }
+        }),
+        isRecording: true,
+      },
+      function() {
+        this.state.recordVideo.startRecording();
+      }
+    );
+  }
+
+  stopRecording() {
+    this.state.recordVideo.stopRecording(() => {
+      this.setState({
+        file: window.URL.createObjectURL(this.state.recordVideo.blob),
+        blob: this.state.recordVideo.blob,
+        isRecording: false,
+        upload: true,
+      });
+      RecordRTC.writeToDisk();
+    });
+  }
+
   detectExtension() {
     if (!!navigator.mozGetUserMedia) return;
 
@@ -241,9 +284,11 @@ class View extends Component {
       type,
       file,
       upload,
+      stream,
       cameraStream,
       screenStream,
-      isExtensionInstalled
+      isExtensionInstalled,
+      isRecording,
     } = this.state;
     return (
       <div>
@@ -251,8 +296,8 @@ class View extends Component {
         <MainNav />
         <Container>
           <Link route="/">
-            <Back class="go-back-button">
-              <span class="fa fa-long-arrow-left" /> back
+            <Back className="go-back-button">
+              <span className="fa fa-long-arrow-left" /> back
             </Back>
           </Link>
           <Title>Upload a new video or picture</Title>
@@ -358,8 +403,18 @@ class View extends Component {
               />
             </FormGroup>
           )}
-          {cameraStream || screenStream && <Video id="video" />}
-          {file && <Video controls autoPlay src={file} />}
+          {(cameraStream || screenStream) && <Video controls autoPlay src={file} id="video" />}
+          {cameraStream || screenStream && (
+            <FormGroup>
+              <Button
+                color="#2c0d54"
+                bgcolor="white"
+                onClick={this.handleRecord.bind(this)}
+              >
+                {isRecording ? 'Stop Recording' : 'Start Recording'}
+              </Button>
+            </FormGroup>
+          )}
           {upload && (
             <FormGroup>
               <Button
