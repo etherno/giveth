@@ -235,14 +235,14 @@ class View extends Component {
   }
 
   startRecording() {
+    window.setSrcObject(
+      this.state.stream.getMixedStream(),
+      document.getElementById("video")
+    );
     this.setState(
       {
         recordVideo: RecordRTC(this.state.stream.getMixedStream(), {
           type: "video",
-          previewStream: function(s) {
-            document.querySelector("video").muted = true;
-            window.setSrcObject(s, document.querySelector("video"));
-          }
         }),
         isRecording: true,
       },
