@@ -147,7 +147,6 @@ class View extends Component {
   }
 
   handleUpload() {
-    console.log("Uploading!");
     const { title, description, social, wallet, category } = this.state;
     if (
       [title, description, social, wallet, category].filter(element => !element)
