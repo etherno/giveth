@@ -10,6 +10,7 @@ import { Flex, Box } from 'grid-styled';
 import MobileNav from "../../components/MobileNav";
 import MainNav from "../../components/MainNav";
 import { Button, ButtonLink } from "../../components/Button";
+import { Link } from "../../routes";
 
 initFirebase();
 
@@ -18,6 +19,18 @@ const Container = styled.div`
   max-width 48rem;
   margin-top: 6rem;
 `
+
+const Back = styled.a`
+  font-family: Quicksand;
+  font-weight: 600;
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+  cursor: pointer;
+  &:hover {
+    color: #2c0d53;
+  }
+`;
 
 const Video = styled.video`
   max-width 48rem;
@@ -91,6 +104,11 @@ class View extends Component {
         <MainNav />
         {media &&
           <Container>
+            <Link route="/">
+              <Back className="go-back-button">
+                <span className="fa fa-long-arrow-left" /> back
+              </Back>
+            </Link>
             <Title>{media.title}</Title>
             <Video src={media.src} loop controls autoPlay />
             <Box p={3}>
