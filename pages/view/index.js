@@ -17,7 +17,10 @@ initFirebase();
 const Container = styled.div`
   margin 0 auto;
   max-width 48rem;
-  margin-top: 6rem;
+  margin-top: 2rem;
+  @media (min-width: 56em) {
+    margin-top: 6rem;
+  }
 `
 
 const Back = styled.a`
