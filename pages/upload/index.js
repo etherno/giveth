@@ -163,7 +163,7 @@ class View extends Component {
       stream => {
         navigator.mediaDevices
           .getUserMedia({ video: true, audio: true })
-          .then(function(cameraStream) {
+          .then((cameraStream) => {
             this.setState(
               {
                 cameraStream,
@@ -403,7 +403,7 @@ class View extends Component {
             </FormGroup>
           )}
           {(cameraStream || screenStream) && <Video controls autoPlay src={file} id="video" />}
-          {cameraStream || screenStream && (
+          {(cameraStream || screenStream) && (
             <FormGroup>
               <Button
                 color="#2c0d54"
