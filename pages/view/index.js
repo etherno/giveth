@@ -18,6 +18,7 @@ const Container = styled.div`
   margin 0 auto;
   max-width 48rem;
   margin-top: 2rem;
+  padding: 0 2rem;
   @media (min-width: 56em) {
     margin-top: 6rem;
   }
@@ -114,7 +115,7 @@ class View extends Component {
             </Link>
             <Title>{media.title}</Title>
             <Video src={media.src} loop controls autoPlay />
-            <Box p={3}>
+            <Box>
               <Date><span className="fa fa-clock-o" aria-hidden="true" /> {date}</Date>
               <Description>{media.description || 'No description'}</Description>
               <Items><span className="fa fa-th-large" aria-hidden="true" /> WALL: {media.wall.split('_').join(' ')}</Items>
