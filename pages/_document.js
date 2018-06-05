@@ -15,7 +15,7 @@ export default class MyDocument extends Document {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="description" content="Charitable giving on the blockchain - revolution.eth" />
           <title>Giveth Video Wall of Fame</title>
-          <link rel="shortcut icon" href="/static/favicon.ico" />
+          <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
           <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" />
           <link href="https://fonts.googleapis.com/css?family=Quicksand:200,300,400,700" rel="stylesheet" />
           <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>

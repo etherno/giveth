@@ -57,6 +57,12 @@ const ButtonsContainer = styled.div`
   display: flex;
 `
 
+const Overlay = styled.div`
+  position: absolute;
+  height: 90%;
+  width: 100%;
+`
+
 class MainMenu extends Component {
   state = {
     showMenu: false
@@ -83,6 +89,7 @@ class MainMenu extends Component {
             {showMenu ? <CrossIcon /> : <BurgerIcon />}
           </BurgerContainer>
         </MenuContainer>
+        {showMenu && <Overlay onClick={() => this.setState({ showMenu: false })} />}
         {showMenu && <Nav>
           <NavItem href="https://giveth.io/#communities">{t('link1')}</NavItem>
           <NavItem href="https://giveth.io/#dac">{t('link2')}</NavItem>
