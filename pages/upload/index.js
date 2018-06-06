@@ -310,6 +310,7 @@ class View extends Component {
               name="title"
               placeholder="E.g. Climate change."
               onChange={e => this.setState({ title: e.target.value })}
+              autoComplete="off"
             />
           </FormGroup>
           <FormGroup>
@@ -319,6 +320,7 @@ class View extends Component {
               name="description"
               placeholder="Description of Climate change."
               onChange={e => this.setState({ description: e.target.value })}
+              autoComplete="off"
             />
           </FormGroup>
           <FormGroup>
