@@ -99,7 +99,7 @@ class MediaCard extends Component {
             <Button color="#2c0d54" bgcolor="white" onClick={this.watchVideo.bind(this)}>
               WATCH <span className="fa fa-video-camera" aria-hidden="true" />
             </Button>
-            <Flex mt={2}>
+            <Flex mt={2} mb={2}>
               <ButtonLink href={src} width="100%" mr={1} color="#2c0d54" bgcolor="white">
                 FIREBASE <span className="fa fa-database" aria-hidden="true" />
               </ButtonLink>
@@ -109,6 +109,9 @@ class MediaCard extends Component {
                 </Button>
               </Tooltip>
             </Flex>
+            <Button color="red" bgcolor="white">
+              DELETE <span className="fa fa-trash" aria-hidden="true" />
+            </Button>
           </Box>
         </Box>
       </Container>

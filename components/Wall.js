@@ -175,6 +175,7 @@ class Wall extends Component {
           }}
         >
           <Masonry gutter=".5rem">
+            {!currentMedia && <div />}
             {currentMedia && currentMedia.map((props) => <div style={{bottom: '-5px'}} >
               <MediaCard {...props} />
             </div>)}
