@@ -79,7 +79,7 @@ class MediaCard extends Component {
   };
 
   render() {
-    const { src, title, description, wall, wallet, social, timestamp, id } = this.props;
+    const { src, title, description, wall, wallet, social, timestamp, id, user } = this.props;
     const date = moment(timestamp).format('HH:mm DD-MM-YYYY');
 
     return (
@@ -109,9 +109,9 @@ class MediaCard extends Component {
                 </Button>
               </Tooltip>
             </Flex>
-            <Button color="red" bgcolor="white">
+            {user && <Button color="red" bgcolor="white">
               DELETE <span className="fa fa-trash" aria-hidden="true" />
-            </Button>
+            </Button>}
           </Box>
         </Box>
       </Container>
