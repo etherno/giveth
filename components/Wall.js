@@ -138,13 +138,15 @@ class Wall extends Component {
       })
     })
 
-    this.setState({
-      currentMedia: this.state.wall ? this.state.media[index].filter((video) => video.wall === this.state.wall) : this.state.media[index],
-      next,
-      previous,
-      week,
-      wall
-    })
+    if (newProps.week) {
+      this.setState({
+        currentMedia: this.state.wall ? this.state.media[index].filter((video) => video.wall === this.state.wall) : this.state.media[index],
+        next,
+        previous,
+        week,
+        wall
+      })
+    }
   }
 
   render() {
@@ -175,10 +177,9 @@ class Wall extends Component {
           }}
         >
           <Masonry gutter=".5rem">
-            {!currentMedia && <div />}
-            {currentMedia && currentMedia.map((props) => <div style={{bottom: '-5px'}} >
+            {currentMedia ? currentMedia.map((props) => <div style={{bottom: '-5px'}} >
               <MediaCard {...props} />
-            </div>)}
+            </div>) : <div />}
           </Masonry>
         </ResponsiveMasonry>
         <Link route="/upload">
