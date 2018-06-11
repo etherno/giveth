@@ -50,13 +50,21 @@ const Items = styled.p`
 `
 
 class MediaCard extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
+  constructor() {
+    super()
+    this.state = {
+      hasWeb3: false,
+    }
   }
-
+  
   componentDidMount() {
     new Clipboard('.copy-to-clipboard');
+
+    if (window.web3) {
+      this.setState({
+        hasWeb3: true,
+      })
+    }
   }
 
   handleMouseEnter() {
@@ -78,8 +86,14 @@ class MediaCard extends Component {
     this.video.play();
   };
 
+  handleDelete() {
+    if (!this.state.hasWeb3) {
+      return alert('No injected web3 instance was detected - Please install e.g. MetaMask')
+    }
+  }
+
   render() {
-    const { src, title, description, wall, wallet, social, timestamp, id, user } = this.props;
+    const { src, title, description, wall, wallet, social, timestamp, id } = this.props;
     const date = moment(timestamp).format('HH:mm DD-MM-YYYY');
 
     return (
@@ -109,9 +123,9 @@ class MediaCard extends Component {
                 </Button>
               </Tooltip>
             </Flex>
-            {user && <Button color="red" bgcolor="white">
+            <Button onClick={this.handleDelete.bind(this)} color="red" bgcolor="white">
               DELETE <span className="fa fa-trash" aria-hidden="true" />
-            </Button>}
+            </Button>
           </Box>
         </Box>
       </Container>
