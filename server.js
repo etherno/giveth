@@ -44,6 +44,14 @@ i18nInstance
         // missing keys
         server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18nInstance))
 
+        server.get('/api/delete', function (req, res) {
+          const { videoId, signedMsg } = req.query
+          // Get video info from DB
+          // Verify that signedMsg is equal to wallet address
+          console.log(videoId, signedMsg)
+          res.status(200).end()
+        })
+
         // use next.js
         server.get('*', (req, res) => handle(req, res))
 
