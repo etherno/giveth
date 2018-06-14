@@ -12,6 +12,17 @@ const i18nextMiddleware = require('i18next-express-middleware')
 const Backend = require('i18next-node-fs-backend')
 const { i18nInstance } = require('./i18n')
 
+const admin = require("firebase-admin")
+
+var serviceAccount = require("./privateKey.json")
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://givethvideowalloffame.firebaseio.com"
+});
+
+var db = admin.database();
+
 // init i18next with serverside settings
 // using i18next-express-middleware
 i18nInstance
@@ -48,6 +59,12 @@ i18nInstance
           const { videoId, signedMsg } = req.query
           // Get video info from DB
           // Verify that signedMsg is equal to wallet address
+
+          var ref = db.ref("GVWOF_v2/" + videoId);
+          ref.once("value", function(snapshot) {
+            console.log(snapshot.val());
+          });
+
           console.log(videoId, signedMsg)
           res.status(200).end()
         })
