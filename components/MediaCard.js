@@ -90,6 +90,16 @@ class MediaCard extends Component {
     if (!this.state.hasWeb3) {
       return alert('No injected web3 instance was detected - Please install e.g. MetaMask')
     }
+    const { id } = this.props
+    const web3 = window.web3
+    web3.personal.sign(web3.toHex(id),web3.eth.defaultAccount, (err, res) => {
+      if (res) {
+        fetch(location.origin + `/api/delete?videoId=${id}&signedMsg=${res}`)
+          .then(function(response) {
+            console.log(response.json())
+          })
+        }
+    })
   }
 
   render() {
