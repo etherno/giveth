@@ -1,6 +1,8 @@
 const express = require('express')
 const path = require('path')
 const next = require('next')
+const web3 = require('web3')
+const sigUtil = require('eth-sig-util')
 
 const routes = require('./routes')
 
@@ -14,7 +16,7 @@ const { i18nInstance } = require('./i18n')
 
 const admin = require("firebase-admin")
 
-var serviceAccount = require("./privateKey.json")
+const serviceAccount = require("./privateKey.json")
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -55,18 +57,23 @@ i18nInstance
         // missing keys
         server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18nInstance))
 
-        server.get('/api/delete', function (req, res) {
+        server.get('/api/delete', (req, res) => {
           const { videoId, signedMsg } = req.query
-          // Get video info from DB
-          // Verify that signedMsg is equal to wallet address
+
+          const validAddress = sigUtil.recoverPersonalSignature({
+            data: web3.utils.utf8ToHex(videoId),
+            sig: signedMsg,
+          })
 
           var ref = db.ref("GVWOF_v2/" + videoId);
           ref.once("value", function(snapshot) {
-            console.log(snapshot.val());
+            const { wallet } = snapshot.val()
+            if (validAddress === wallet.toLowerCase()) {
+              // delete video logic
+              res.status(200).end()
+            }
+            res.status(404).end()
           });
-
-          console.log(videoId, signedMsg)
-          res.status(200).end()
         })
 
         // use next.js

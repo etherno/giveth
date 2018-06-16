@@ -95,10 +95,11 @@ class MediaCard extends Component {
     web3.personal.sign(web3.toHex(id),web3.eth.defaultAccount, (err, res) => {
       if (res) {
         fetch(location.origin + `/api/delete?videoId=${id}&signedMsg=${res}`)
-          .then(function(response) {
-            console.log(response.json())
+          .then(function(res) {
+            console.log(res)
+            // show modal/alert
           })
-        }
+      }
     })
   }
 
