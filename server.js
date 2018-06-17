@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const url = require('url')
 const next = require('next')
 const web3 = require('web3')
 const sigUtil = require('eth-sig-util')
@@ -20,11 +21,18 @@ const serviceAccount = require("./privateKey.json")
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://givethvideowalloffame.firebaseio.com"
+  databaseURL: "https://givethvideowalloffame.firebaseio.com",
+  storageBucket: "givethvideowalloffame.appspot.com",
 });
 
 var db = admin.database();
+var bucket = admin.storage().bucket();
 
+// bucket.getFiles(function(err, files) {
+//   if (!err) {
+//     console.log(files)
+//   }
+// });
 // init i18next with serverside settings
 // using i18next-express-middleware
 i18nInstance
@@ -66,11 +74,20 @@ i18nInstance
           })
 
           var ref = db.ref("GVWOF_v2/" + videoId);
-          ref.once("value", function(snapshot) {
-            const { wallet } = snapshot.val()
+          ref.once("value", async (snapshot) => {
+            const { wallet, src } = snapshot.val()
             if (validAddress === wallet.toLowerCase()) {
-              // delete video logic
-              res.status(200).end()
+              let filePath = decodeURIComponent(src).split('https://firebasestorage.googleapis.com/v0/b/givethvideowalloffame.appspot.com/o/')[1]
+              filePath = filePath.split(url.parse(src).search)[0]
+
+              const file = bucket.file(filePath);
+              const exists = await file.exists();
+
+              if (exists) {
+                await file.delete() // delete video from storage
+                await ref.set(null) // delete info from realtime database
+                res.status(200).end()
+              }
             }
             res.status(404).end()
           });
