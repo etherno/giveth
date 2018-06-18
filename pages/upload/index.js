@@ -150,13 +150,15 @@ class View extends Component {
   }
 
   handleUpload() {
-    const { title, description, social, wallet, category } = this.state;
+    const { title, description, social, wallet, category, week } = this.state;
     if (
       [title, description, social, wallet, category].filter(element => !element)
         .length
     ) {
       return alert("You're missing a field! Please check again.");
     }
+    // Upload logic
+    // Upload to endpoint
   }
 
   handleCamera() {

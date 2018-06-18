@@ -93,6 +93,26 @@ i18nInstance
           });
         })
 
+        // Some upload logic
+        // Express server upload logic
+        // const storageRef = firebase.storage().ref("/GVWOF_v2/" + week + "/" + title);
+        // const file = bucket.file(filePath);
+        // const result = await file.save(contents);
+        // storageRef.getDownloadURL()
+        // var ref = db.ref("GVWOF_v2/");
+        // await ref.push({
+        //   src: url,
+        //   title: title,
+        //   description: description,
+        //   type: _type,
+        //   timestamp: timestamp,
+        //   week: week,
+        //   wall: wall,
+        //   social: social,
+        //   wallet: wallet,
+        //   ipfs: "http://35.188.240.194:8080/ipfs/" + self.state.ipfsId
+        // })
+
         // use next.js
         server.get('*', (req, res) => handle(req, res))
 
