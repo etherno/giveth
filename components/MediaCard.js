@@ -50,21 +50,8 @@ const Items = styled.p`
 `
 
 class MediaCard extends Component {
-  constructor() {
-    super()
-    this.state = {
-      hasWeb3: false,
-    }
-  }
-  
   componentDidMount() {
     new Clipboard('.copy-to-clipboard');
-
-    if (window.web3) {
-      this.setState({
-        hasWeb3: true,
-      })
-    }
   }
 
   handleMouseEnter() {
@@ -87,11 +74,14 @@ class MediaCard extends Component {
   };
 
   handleDelete() {
-    if (!this.state.hasWeb3) {
+    const web3 = window.web3
+
+    if (!web3) {
       return alert('No injected web3 instance was detected - Please install e.g. MetaMask')
     }
+
     const { id } = this.props
-    const web3 = window.web3
+    
     web3.personal.sign(web3.toHex(id),web3.eth.defaultAccount, (err, res) => {
       if (res) {
         fetch(location.origin + `/api/delete?videoId=${id}&signedMsg=${res}`)

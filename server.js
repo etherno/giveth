@@ -67,7 +67,7 @@ i18nInstance
 
         server.get('/api/delete', (req, res) => {
           const { videoId, signedMsg } = req.query
-
+          // TODO: Refactor into real authentication scheme with sessions
           const validAddress = sigUtil.recoverPersonalSignature({
             data: web3.utils.utf8ToHex(videoId),
             sig: signedMsg,
@@ -95,6 +95,32 @@ i18nInstance
 
         // Some upload logic
         // Express server upload logic
+        // Verify wallet address
+        server.post('/api/upload', function (req, res, next) {
+          // const { address, signedMsg } = req.query
+          // TODO: Refactor into real authentication scheme with sessions
+          // const validAddress = sigUtil.recoverPersonalSignature({
+          //   data: web3.utils.utf8ToHex(address),
+          //   sig: signedMsg,
+          // })
+
+          // if (validAddress === wallet.toLowerCase()) {
+
+          //   res.status(200).end()
+          // }
+
+          const file = bucket.file('/test');
+
+          req.pipe(file.createWriteStream())
+            .on('error', function(err) {
+              res.status(404).end()
+            })
+            .on('finish', function() {
+              res.status(200).end()
+            });
+          // req.pipe(fs.createWriteStream('./uploadFile'));
+          // req.on('end', next);
+        });
         // const storageRef = firebase.storage().ref("/GVWOF_v2/" + week + "/" + title);
         // const file = bucket.file(filePath);
         // const result = await file.save(contents);

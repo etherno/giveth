@@ -150,15 +150,32 @@ class View extends Component {
   }
 
   handleUpload() {
-    const { title, description, social, wallet, category, week } = this.state;
+    const { title, description, social, wallet, category, week, blob } = this.state;
+
     if (
       [title, description, social, wallet, category].filter(element => !element)
         .length
     ) {
       return alert("You're missing a field! Please check again.");
     }
-    // Upload logic
-    // Upload to endpoint
+
+    if (!window.web3) {
+      return alert('No injected web3 instance was detected - Please install e.g. MetaMask')
+    }
+
+    web3.personal.sign(web3.toHex(wallet),web3.eth.defaultAccount, (err, res) => {
+      if (res) {
+        fetch({
+          url: location.origin + `/api/delete?wallet=${wallet}&signedMsg=${res}`,
+          method: 'POST',
+          body: blob
+        })
+          .then(function(res) {
+            console.log(res)
+            // show modal/alert
+          })
+      }
+    })
   }
 
   handleCamera() {
