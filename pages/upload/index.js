@@ -351,7 +351,7 @@ class View extends Component {
               onChange={e => this.setState({ social: e.target.value })}
             />
           </FormGroup>
-          <FormGroup>
+          {/* <FormGroup>
             <Label>Public wallet address (Metamask, MEW,...)</Label>
             <Input
               type="text"
@@ -359,7 +359,7 @@ class View extends Component {
               placeholder="Provide wallet address to e.g. get rewarded"
               onChange={e => this.setState({ wallet: e.target.value })}
             />
-          </FormGroup>
+          </FormGroup> */}
           <FormGroup>
             <Label>Choose video category</Label>
             <LabelRadio>
