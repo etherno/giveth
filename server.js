@@ -4,6 +4,8 @@ const url = require('url')
 const next = require('next')
 const web3 = require('web3')
 const sigUtil = require('eth-sig-util')
+const moment = require('moment')
+const UUID = require("uuid-v4");
 
 const routes = require('./routes')
 
@@ -28,11 +30,6 @@ admin.initializeApp({
 var db = admin.database();
 var bucket = admin.storage().bucket();
 
-// bucket.getFiles(function(err, files) {
-//   if (!err) {
-//     console.log(files)
-//   }
-// });
 // init i18next with serverside settings
 // using i18next-express-middleware
 i18nInstance
@@ -73,7 +70,7 @@ i18nInstance
             sig: signedMsg,
           })
 
-          var ref = db.ref("GVWOF_v2/" + videoId);
+          const ref = db.ref("GVWOF_v2/" + videoId);
           ref.once("value", async (snapshot) => {
             const { wallet, src } = snapshot.val()
             if (validAddress === wallet.toLowerCase()) {
@@ -93,51 +90,51 @@ i18nInstance
           });
         })
 
-        // Some upload logic
-        // Express server upload logic
-        // Verify wallet address
         server.post('/api/upload', function (req, res, next) {
-          // const { address, signedMsg } = req.query
+          const { wallet, signedMsg, title, description, social, category, fileType } = req.query
+
           // TODO: Refactor into real authentication scheme with sessions
-          // const validAddress = sigUtil.recoverPersonalSignature({
-          //   data: web3.utils.utf8ToHex(address),
-          //   sig: signedMsg,
-          // })
+          const validAddress = sigUtil.recoverPersonalSignature({
+            data: wallet,
+            sig: signedMsg,
+          })
 
-          // if (validAddress === wallet.toLowerCase()) {
+          const uuid = UUID()
+          const week = moment().format("WW_MM_YYYY")
+          const timestamp = new Date().getTime()
+          const path = 'GVWOF_v3/' + week + '/' + title
 
-          //   res.status(200).end()
-          // }
+          if (validAddress === wallet.toLowerCase()) {
+            const file = bucket.file('/' + path);
+            req.pipe(file.createWriteStream({
+              contentType: fileType,
+              metadata: {
+                firebaseStorageDownloadTokens: uuid,
+              }
+            }))
+            req.on('error', () => res.status(404).end());
+            req.on('end', () => {
+              const src = 'https://firebasestorage.googleapis.com/v0/b/givethvideowalloffame.appspot.com/o/' + encodeURIComponent(path) + '?alt=media&token=' + uuid
+              const ref = db.ref("GVWOF_v3");
 
-          const file = bucket.file('/test');
+              ref.push({
+                src,
+                title,
+                description,
+                type: fileType,
+                timestamp,
+                week,
+                wall: category,
+                social,
+                wallet,
+              })
 
-          req.pipe(file.createWriteStream())
-            .on('error', function(err) {
-              res.status(404).end()
-            })
-            .on('finish', function() {
               res.status(200).end()
             });
-          // req.pipe(fs.createWriteStream('./uploadFile'));
-          // req.on('end', next);
+          } else {
+            res.status(404).end()
+          }
         });
-        // const storageRef = firebase.storage().ref("/GVWOF_v2/" + week + "/" + title);
-        // const file = bucket.file(filePath);
-        // const result = await file.save(contents);
-        // storageRef.getDownloadURL()
-        // var ref = db.ref("GVWOF_v2/");
-        // await ref.push({
-        //   src: url,
-        //   title: title,
-        //   description: description,
-        //   type: _type,
-        //   timestamp: timestamp,
-        //   week: week,
-        //   wall: wall,
-        //   social: social,
-        //   wallet: wallet,
-        //   ipfs: "http://35.188.240.194:8080/ipfs/" + self.state.ipfsId
-        // })
 
         // use next.js
         server.get('*', (req, res) => handle(req, res))

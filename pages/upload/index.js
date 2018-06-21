@@ -145,15 +145,16 @@ class View extends Component {
   handleFile(e) {
     this.setState({
       file: URL.createObjectURL(e.target.files[0]),
-      upload: true
+      upload: true,
+      blob: e.target.files[0]
     });
   }
 
   handleUpload() {
-    const { title, description, social, wallet, category, week, blob } = this.state;
+    const { title, description, social, category, week, blob } = this.state;
 
     if (
-      [title, description, social, wallet, category].filter(element => !element)
+      [title, description, social, category].filter(element => !element)
         .length
     ) {
       return alert("You're missing a field! Please check again.");
@@ -163,10 +164,15 @@ class View extends Component {
       return alert('No injected web3 instance was detected - Please install e.g. MetaMask')
     }
 
-    web3.personal.sign(web3.toHex(wallet),web3.eth.defaultAccount, (err, res) => {
+    const web3 = window.web3
+
+    const wallet = web3.eth.defaultAccount
+
+    const extras = `&title=${title}&description=${description}&social=${social}&category=${category}`
+
+    web3.personal.sign(wallet,web3.eth.defaultAccount, (err, res) => {
       if (res) {
-        fetch({
-          url: location.origin + `/api/delete?wallet=${wallet}&signedMsg=${res}`,
+        fetch(location.origin + `/api/upload?wallet=${wallet}&signedMsg=${res}&fileType=${blob.type}` + extras, {
           method: 'POST',
           body: blob
         })
@@ -426,7 +432,7 @@ class View extends Component {
               />
             </FormGroup>
           )}
-          {(cameraStream || screenStream) && <Video controls autoPlay src={file} id="video" />}
+          {(upload || cameraStream || screenStream) && <Video controls autoPlay src={file} id="video" />}
           {(cameraStream || screenStream) && (
             <FormGroup>
               <Button
