@@ -168,6 +168,10 @@ class View extends Component {
 
     const wallet = web3.eth.defaultAccount
 
+    if (!wallet) {
+      return alert('Please unlock MetaMask!')
+    }
+
     const extras = `&title=${title}&description=${description}&social=${social}&category=${category}`
 
     web3.personal.sign(wallet,web3.eth.defaultAccount, (err, res) => {
@@ -177,8 +181,8 @@ class View extends Component {
           body: blob
         })
           .then(function(res) {
-            console.log(res)
             // show modal/alert
+            res.ok ? alert('Upload successful!') : alert('Error occured when trying to upload')
           })
       }
     })

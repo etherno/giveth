@@ -126,7 +126,7 @@ i18nInstance
                 week,
                 wall: category,
                 social,
-                wallet,
+                wallet: validAddress,
               })
 
               res.status(200).end()
