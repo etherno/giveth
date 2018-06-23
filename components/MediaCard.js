@@ -86,8 +86,7 @@ class MediaCard extends Component {
       if (res) {
         fetch(location.origin + `/api/delete?videoId=${id}&signedMsg=${res}`)
           .then(function(res) {
-            console.log(res)
-            // show modal/alert
+            res.ok ? alert('Succesfully deleted video') : 'Something went wrong with deleting your video'
           })
       }
     })

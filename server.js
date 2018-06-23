@@ -70,7 +70,7 @@ i18nInstance
             sig: signedMsg,
           })
 
-          const ref = db.ref("GVWOF_v2/" + videoId);
+          const ref = db.ref("GVWOF_v3/" + videoId);
           ref.once("value", async (snapshot) => {
             const { wallet, src } = snapshot.val()
             if (validAddress === wallet.toLowerCase()) {

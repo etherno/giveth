@@ -1,15 +1,13 @@
 import React, { Component } from "react";
-import firebase from "firebase";
 import styled from "styled-components";
 import moment from "moment";
 import { withI18next } from "../../lib/withI18next";
 import initFirebase from "../../lib/initFirebase";
 
-import { Flex, Box } from "grid-styled";
 import MobileNav from "../../components/MobileNav";
 import MainNav from "../../components/MainNav";
-import { Button, ButtonLink } from "../../components/Button";
-import { Link } from "../../routes";
+import { Button } from "../../components/Button";
+import { Router, Link } from "../../routes";
 
 initFirebase();
 
@@ -174,6 +172,14 @@ class View extends Component {
 
     const extras = `&title=${title}&description=${description}&social=${social}&category=${category}`
 
+    alert('You will need to sign with your MetaMask wallet in order to upload your video')
+
+    // Stop video stream
+    const { audioStream, screenStream, cameraStream } = this.state
+    if (audioStream) audioStream.stop()
+    if (screenStream) screenStream.stop()
+    if (cameraStream) cameraStream.stop()
+
     web3.personal.sign(wallet,web3.eth.defaultAccount, (err, res) => {
       if (res) {
         fetch(location.origin + `/api/upload?wallet=${wallet}&signedMsg=${res}&fileType=${blob.type}` + extras, {
@@ -181,8 +187,13 @@ class View extends Component {
           body: blob
         })
           .then(function(res) {
-            // show modal/alert
-            res.ok ? alert('Upload successful!') : alert('Error occured when trying to upload')
+            if (res.ok) {
+              Router.push('/')
+
+              return alert('Upload successful!')
+            }
+            
+            alert('Error occured when trying to upload')
           })
       }
     })
@@ -237,6 +248,7 @@ class View extends Component {
               screenStream.height = window.screen.height; // or 2160
               this.setState(
                 {
+                  audioStream,
                   screenStream,
                   stream: new window.MultiStreamsMixer([
                     screenStream,
@@ -436,7 +448,7 @@ class View extends Component {
               />
             </FormGroup>
           )}
-          {(upload || cameraStream || screenStream) && <Video controls autoPlay src={file} id="video" />}
+          {(upload || cameraStream || screenStream) && <Video controls autoPlay muted={isRecording} src={file} id="video" />}
           {(cameraStream || screenStream) && (
             <FormGroup>
               <Button

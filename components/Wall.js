@@ -61,7 +61,7 @@ class Wall extends Component {
   }
 
   componentDidMount() {
-    const ref = firebase.database().ref("GVWOF_v2/");
+    const ref = firebase.database().ref("GVWOF_v3/");
     ref.on('value', this.gotData, (err) => console.log(err));
   }
 
@@ -110,7 +110,7 @@ class Wall extends Component {
 
     if (!index) {
       index = 0
-      previous = mediaList[1][0].week
+      previous = mediaList[1] ? mediaList[1][0].week : null
       this.state.week = mediaList[0][0].week
     }
 
