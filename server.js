@@ -72,7 +72,11 @@ i18nInstance
 
           const ref = db.ref("GVWOF_v3/" + videoId);
           ref.once("value", async (snapshot) => {
-            const { wallet, src } = snapshot.val()
+            const { wallet, src, timestamp } = snapshot.val()
+            const olderThanOneDay = !!moment().diff(moment(timestamp), 'days')
+            if (olderThanOneDay) {
+              res.status(404).end()
+            }
             if (validAddress === wallet.toLowerCase()) {
               let filePath = decodeURIComponent(src).split('https://firebasestorage.googleapis.com/v0/b/givethvideowalloffame.appspot.com/o/')[1]
               filePath = filePath.split(url.parse(src).search)[0]

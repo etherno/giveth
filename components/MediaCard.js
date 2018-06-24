@@ -86,7 +86,7 @@ class MediaCard extends Component {
       if (res) {
         fetch(location.origin + `/api/delete?videoId=${id}&signedMsg=${res}`)
           .then(function(res) {
-            res.ok ? alert('Succesfully deleted video') : 'Something went wrong with deleting your video'
+            res.ok ? alert('Succesfully deleted video') : alert('Something went wrong with deleting your video')
           })
       }
     })
@@ -95,6 +95,8 @@ class MediaCard extends Component {
   render() {
     const { src, title, description, wall, wallet, social, timestamp, id } = this.props;
     const date = moment(timestamp).format('HH:mm DD-MM-YYYY');
+    const olderThanOneDay = !!moment().diff(moment(timestamp), 'days')
+    const metaMaskAddress = web3.eth.defaultAccount
 
     return (
       <Container
@@ -123,9 +125,9 @@ class MediaCard extends Component {
                 </Button>
               </Tooltip>
             </Flex>
-            <Button onClick={this.handleDelete.bind(this)} color="red" bgcolor="white">
+            {(!olderThanOneDay && wallet === metaMaskAddress) && <Button onClick={this.handleDelete.bind(this)} color="red" bgcolor="white">
               DELETE <span className="fa fa-trash" aria-hidden="true" />
-            </Button>
+            </Button>}
           </Box>
         </Box>
       </Container>
