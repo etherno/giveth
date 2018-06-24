@@ -175,10 +175,12 @@ class View extends Component {
     alert('You will need to sign with your MetaMask wallet in order to upload your video')
 
     // Stop video stream
-    const { audioStream, screenStream, cameraStream } = this.state
+    const { audioStream, screenStream, cameraStream, initialStream } = this.state
+
     if (audioStream) audioStream.stop()
     if (screenStream) screenStream.stop()
     if (cameraStream) cameraStream.stop()
+    if (initialStream) initialStream.stop()
 
     web3.personal.sign(wallet,web3.eth.defaultAccount, (err, res) => {
       if (res) {
@@ -203,12 +205,13 @@ class View extends Component {
     const params = { audio: true, video: true };
     navigator.getUserMedia(
       params,
-      stream => {
+      initialStream => {
         navigator.mediaDevices
           .getUserMedia({ video: true, audio: true })
           .then((cameraStream) => {
             this.setState(
               {
+                initialStream,
                 cameraStream,
                 stream: new window.MultiStreamsMixer([cameraStream])
               },
