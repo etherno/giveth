@@ -70,14 +70,11 @@ i18nInstance
             sig: signedMsg,
           })
 
-          const ref = db.ref("GVWOF_v3/" + videoId);
+          const ref = db.ref("GVWOF_v2/" + videoId);
           ref.once("value", async (snapshot) => {
             const { wallet, src, timestamp } = snapshot.val()
             const olderThanOneDay = !!moment().diff(moment(timestamp), 'days')
-            if (olderThanOneDay) {
-              res.status(404).end()
-            }
-            if (validAddress === wallet.toLowerCase()) {
+            if (!olderThanOneDay && validAddress === wallet.toLowerCase()) {
               let filePath = decodeURIComponent(src).split('https://firebasestorage.googleapis.com/v0/b/givethvideowalloffame.appspot.com/o/')[1]
               filePath = filePath.split(url.parse(src).search)[0]
 
@@ -106,7 +103,7 @@ i18nInstance
           const uuid = UUID()
           const week = moment().format("WW_MM_YYYY")
           const timestamp = new Date().getTime()
-          const path = 'GVWOF_v3/' + week + '/' + title
+          const path = 'GVWOF_v2/' + week + '/' + title
 
           if (validAddress === wallet.toLowerCase()) {
             const file = bucket.file('/' + path);
@@ -119,7 +116,7 @@ i18nInstance
             req.on('error', () => res.status(404).end());
             req.on('end', () => {
               const src = 'https://firebasestorage.googleapis.com/v0/b/givethvideowalloffame.appspot.com/o/' + encodeURIComponent(path) + '?alt=media&token=' + uuid
-              const ref = db.ref("GVWOF_v3");
+              const ref = db.ref("GVWOF_v2");
 
               ref.push({
                 src,

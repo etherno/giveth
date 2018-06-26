@@ -86,7 +86,7 @@ class View extends Component {
   componentWillMount() {
     const { id } = this.props;
     if (id) {
-      const path = "GVWOF_v3/" + id;
+      const path = "GVWOF_v2/" + id;
       const ref = firebase.database().ref(path);
       ref.on(
         "value",

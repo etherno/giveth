@@ -61,7 +61,7 @@ class Wall extends Component {
   }
 
   componentDidMount() {
-    const ref = firebase.database().ref("GVWOF_v3/");
+    const ref = firebase.database().ref("GVWOF_v2/");
     ref.on('value', this.gotData, (err) => console.log(err));
   }
 
