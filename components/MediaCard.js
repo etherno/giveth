@@ -96,7 +96,8 @@ class MediaCard extends Component {
     const { src, title, description, wall, wallet, social, timestamp, id } = this.props;
     const date = moment(timestamp).format('HH:mm DD-MM-YYYY');
     const olderThanOneDay = !!moment().diff(moment(timestamp), 'days')
-    const metaMaskAddress = web3.eth.defaultAccount
+
+    const metaMaskAddress = window.web3 ? web3.eth.defaultAccount : false
 
     return (
       <Container

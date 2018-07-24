@@ -149,7 +149,7 @@ class View extends Component {
   }
 
   handleUpload() {
-    const { title, description, social, category, week, blob } = this.state;
+    const { title, description, social, category, blob } = this.state;
 
     if (
       [title, description, social, category].filter(element => !element)
@@ -158,11 +158,11 @@ class View extends Component {
       return alert("You're missing a field! Please check again.");
     }
 
+    const web3 = window.web3
+
     if (!window.web3) {
       return alert('No injected web3 instance was detected - Please install e.g. MetaMask')
     }
-
-    const web3 = window.web3
 
     const wallet = web3.eth.defaultAccount
 
